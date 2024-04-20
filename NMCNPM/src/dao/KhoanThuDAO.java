@@ -57,7 +57,7 @@ public class KhoanThuDAO implements DAOInterface<KhoanThu>{
 			//3.run cau lenh SQL
 			String sql = "UPDATE tbl_khoanthu" +
 						" SET" + 
-						"ten_khoan_thu = '" + t.getTen_khoan_thu()+"'"+
+						" ten_khoan_thu = '" + t.getTen_khoan_thu()+"'"+
 						",so_tien = '" + t.getSo_tien()+"'" +
 						",loai_khoan_thu = " + t.getLoai_khoan_thu() +
 						",dot_thu = '" + t.getDate() + "'" + 

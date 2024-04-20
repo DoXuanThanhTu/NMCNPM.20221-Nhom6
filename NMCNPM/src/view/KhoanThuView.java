@@ -29,7 +29,7 @@ public class KhoanThuView {
 	private MainWindow mainWindow;
 	public ArrayList<KhoanThu> list;
 	public DefaultTableModel table;
-	JButton ThemKhoanThu, XoaKhoanThu, TimKhoanThu;
+	JButton ThemKhoanThu, XoaKhoanThu, TimKhoanThu, CapnhatKhoanThu;
 	JTable jtable = new JTable();
 	JLabel buttonLabel;
 	DefaultTableModel tableModel = new DefaultTableModel() {
@@ -83,16 +83,21 @@ public class KhoanThuView {
         TimKhoanThu = new JButton("Tìm khoản thu");
         TimKhoanThu.setBounds(100, 200, 200, 50);
         
+        CapnhatKhoanThu = new JButton("Cập nhật khoản thu");
+        CapnhatKhoanThu.setBounds(100, 250, 200, 50);
+        
         
         ActionListener ac = new KhoanThuController(this);
         ThemKhoanThu.addActionListener(ac);
         XoaKhoanThu.addActionListener(ac);
         TimKhoanThu.addActionListener(ac);
+        CapnhatKhoanThu.addActionListener(ac);
         back.addActionListener(ac);
         
         buttonLabel.add(ThemKhoanThu);
         buttonLabel.add(TimKhoanThu);
         buttonLabel.add(XoaKhoanThu);
+        buttonLabel.add(CapnhatKhoanThu);
         buttonLabel.add(back);
         mainLabel.add(buttonLabel);
         mainLabel.revalidate(); 
@@ -165,6 +170,12 @@ public class KhoanThuView {
 	}
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
+	}
+	public JButton getCapnhatKhoanThu() {
+		return CapnhatKhoanThu;
+	}
+	public void setCapnhatKhoanThu(JButton capnhatKhoanThu) {
+		CapnhatKhoanThu = capnhatKhoanThu;
 	}
     
 }

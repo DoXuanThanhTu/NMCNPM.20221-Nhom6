@@ -37,6 +37,7 @@ public class KhoanThuController implements ActionListener{
 		JButton ThemkhoanThu = khoanThuView.getThemKhoanThu();
 		JButton XoakhoanThu = khoanThuView.getXoaKhoanThu();
 		JButton TimkhoanThu = khoanThuView.getTimKhoanThu();
+		JButton CapnhatKhoanThu = khoanThuView.getCapnhatKhoanThu();
 		
 		JButton back = mainWindow.getBack();
 		JLabel buttonLabel = khoanThuView.getButtonLabel();
@@ -65,16 +66,15 @@ public class KhoanThuController implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (e.getSource() == back) {
 					buttonLabel.removeAll();
 					mainLabel.remove(buttonLabel);
 					buttonLabel.add(TimkhoanThu);
 					buttonLabel.add(XoakhoanThu);
 					buttonLabel.add(ThemkhoanThu);
+					buttonLabel.add(CapnhatKhoanThu);
 					buttonLabel.add(back);
 					mainLabel.add(buttonLabel);
 					mainLabel.repaint();
-				}
 			}
 		});
 		if (e.getSource() == ThemkhoanThu) {
@@ -133,7 +133,7 @@ public class KhoanThuController implements ActionListener{
 
 		}
 						
-		if (e.getSource() == XoakhoanThu) {
+		else if (e.getSource() == XoakhoanThu) {
 			buttonLabel.removeAll();
 			buttonLabel.add(TEXTFIELDtenkhoanthu);
 			buttonLabel.add(LABELtenkhoanthu);
@@ -168,7 +168,7 @@ public class KhoanThuController implements ActionListener{
 				}
 			});
 					}
-		if (e.getSource() == TimkhoanThu) {
+		else if (e.getSource() == TimkhoanThu) {
 			buttonLabel.removeAll();
 			buttonLabel.add(TEXTFIELDtenkhoanthu);
 			buttonLabel.add(LABELtenkhoanthu);
@@ -202,6 +202,60 @@ public class KhoanThuController implements ActionListener{
 					}
 			});
 					}
+		else if(e.getSource() == CapnhatKhoanThu) {
+			System.out.println("Cap nhat");
+			buttonLabel.removeAll();
+			buttonLabel.add(TEXTFIELDtenkhoanthu);
+			buttonLabel.add(LABELtenkhoanthu);
+			buttonLabel.add(TEXTFIELDsotien);
+			buttonLabel.add(LABELsotien);
+			buttonLabel.add(COMBOBOXloaikhoanthu);
+			buttonLabel.add(LABELloaikhoanthu);
+			buttonLabel.add(TEXTFIELDdotthu);
+			buttonLabel.add(LABELdotthu);
+			buttonLabel.setLayout(null);
+			JButton Capnhat = new JButton("Cập nhật");
+			Capnhat.setBounds(100, 550, 200, 30);
+			buttonLabel.add(Capnhat);
+			buttonLabel.add(back);
+			Capnhat.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					String TEXTtenkhoanthu = TEXTFIELDtenkhoanthu.getText();
+					String TEXTsotien = TEXTFIELDsotien.getText();
+					String TEXTdotthu = TEXTFIELDdotthu.getText();
+					String TEXTloaikhoanthu =  "" + COMBOBOXloaikhoanthu.getItemAt(COMBOBOXloaikhoanthu.getSelectedIndex());
+					
+					double sotien = Double.parseDouble(TEXTsotien);
+					int khoanthu;
+					if(TEXTloaikhoanthu == "Tự nguyện") {
+						khoanthu = 0;
+					}else {
+						khoanthu = 1;
+					}
+					KhoanThu khoanThu = new KhoanThu(TEXTtenkhoanthu, sotien,khoanthu , TEXTdotthu);
+					// TODO Auto-generated method stub
+					if(e.getSource() == Capnhat) {
+						
+						if (KhoanThuDAO.getInstance().checkExit(khoanThu) == true) {
+							khoanThu.setID_khoanthu(KhoanThuDAO.getInstance().selectByusername(khoanThu).getID_khoanthu());
+							KhoanThuDAO.getInstance().update(khoanThu);
+							khoanThuView.list = KhoanThuDAO.getInstance().selectALL();
+							khoanThuView.table.setRowCount(0);
+							khoanThuView.showTable(khoanThuView.getList());
+							JOptionPane.showMessageDialog(rootPane, "Cập nhật thành công");
+								TEXTFIELDsotien.setText("");
+								TEXTFIELDdotthu.setText("");
+								TEXTFIELDtenkhoanthu.setText("");
+						} else {
+						    JOptionPane.showMessageDialog(rootPane, "Không tìm thấy khoản thu để cập nhật","Alert", JOptionPane.ERROR_MESSAGE);
+						}
+						mainLabel.repaint();
+					}
+				}
+			});
+		}
 		mainLabel.add(buttonLabel);
 		mainLabel.repaint();
 	}
